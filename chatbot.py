@@ -6,15 +6,16 @@ from streamlit_chat import message
 openai.api_key = st.secrets["api_secret"]
 
 def generate_response(prompt):
-    completions = openai.Completion.create(
-        engine = "gpt-3.5-turbo",
+    completions = openai.ChatCompletion.create(
+        model = "gpt-3.5-turbo",
         prompt = prompt,
+        messages = [{'role':'user','content' : 'Hello!'}],
         max_tokens = 1024,
         n = 1,
         stop = None,
-        temperature=0.5,
+        temperature=0,
     )
-    message = completions.choices[0].text
+    message = completions.choices[0].message.content
     return message 
 
 # Fake ChatAI Interface
